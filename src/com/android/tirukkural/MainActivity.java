@@ -1,30 +1,47 @@
 package com.android.tirukkural;
 
-import android.app.Activity;
+import android.annotation.TargetApi;
+import android.app.ListActivity;
+import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SimpleCursorAdapter;
 
-public class MainActivity extends Activity {
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class MainActivity extends ListActivity {
+
+    DatabaseOpenHelper mDbHelper;
+    SimpleCursorAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_main);
+	mDbHelper = new DatabaseOpenHelper(this);
+	Cursor kuralCursor = readKural();
+	mAdapter = new SimpleCursorAdapter(this, R.layout.list_layout, kuralCursor, new String[]{DatabaseOpenHelper.LINE_1, DatabaseOpenHelper.LINE_2},
+		new int[] {
+		R.id.line1, R.id.line2 }, 0);
+
+	setListAdapter(mAdapter);
+
+    }
+
+    private Cursor readKural() {
+	return mDbHelper.getWritableDatabase().query(DatabaseOpenHelper.TABLE_NAME, DatabaseOpenHelper.columns, null, new String[] {},
+		null, null, null);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-	// Inflate the menu; this adds items to the action bar if it is present.
 	getMenuInflater().inflate(R.menu.main, menu);
 	return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-	// Handle action bar item clicks here. The action bar will
-	// automatically handle clicks on the Home/Up button, so long
-	// as you specify a parent activity in AndroidManifest.xml.
 	int id = item.getItemId();
 	if (id == R.id.action_settings) {
 	    return true;
