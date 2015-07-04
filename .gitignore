@@ -11,3 +11,5 @@
 # Generated files
 bin/
 gen/
+.idea/
+*.iml
