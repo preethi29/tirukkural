@@ -7,15 +7,16 @@ import android.graphics.*;
 import android.os.*;
 import android.view.*;
 import android.widget.*;
+import com.android.tirukkural.adapter.*;
 
 import java.io.*;
 import java.sql.SQLException;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class MainActivity extends ListActivity {
+public class MainActivity extends ExpandableListActivity {
 
     DatabaseHelper mDbHelper;
-    SimpleCursorAdapter mAdapter;
+    ExpandableListAdapter expandableListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +35,16 @@ public class MainActivity extends ListActivity {
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
-        Cursor kuralCursor = readKural();
-        mAdapter = new SimpleCursorAdapter(this, R.layout.list_layout, kuralCursor, new String[]{"_id", "line1", "line2"},
-                new int[]{0, R.id.line1, R.id.line2}, 0);
+//        Cursor kuralCursor = readKural();
+//        mAdapter = new SimpleCursorAdapter(this, R.layout.couplets, kuralCursor, new String[]{"_id", "line1", "line2"},
+//                new int[]{0, R.id.line1, R.id.line2}, 0);
 
-        mAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-            Typeface tamilFont = Typeface.createFromAsset(getAssets(), "fonts/Bamini.ttf");
+        getExpandableListView().setGroupIndicator(null);
+        getExpandableListView().setTextFilterEnabled(true);
+        SectionChapterAdapter adapter = new SectionChapterAdapter(mDbHelper.readSections(), this, mDbHelper);
+
+        adapter.setViewBinder(new SimpleCursorTreeAdapter.ViewBinder() {
+            Typeface tamilFont = Typeface.createFromAsset(getAssets(), "fonts/tamil3.ttf");
 
             @Override
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
@@ -49,14 +54,10 @@ public class MainActivity extends ListActivity {
             }
         });
 
-        setListAdapter(mAdapter);
-
+        setListAdapter(adapter);
+//
     }
 
-    private Cursor readKural() {
-        return mDbHelper.getWritableDatabase().query("couplets", new String[]{"_id", "line1", "line2"}, null, new String[]{},
-                null, null, null);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

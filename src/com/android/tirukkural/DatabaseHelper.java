@@ -1,10 +1,12 @@
 package com.android.tirukkural;
 
 import android.content.*;
+import android.database.*;
 import android.database.sqlite.*;
 
 import java.io.*;
 import java.sql.*;
+import java.sql.SQLException;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -120,6 +122,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
 
     }
+
+    public Cursor readKural() {
+        return this.getWritableDatabase().query("couplets", new String[]{"_id", "line1", "line2"}, null, new String[]{},
+                null, null, null);
+    }
+
+    public Cursor readSections() {
+        return this.getWritableDatabase().query("sections", new String[]{"_id", "name"}, null, new String[]{},
+                null, null, null);
+    }
+
+    public Cursor readChapters(String sectionIndex) {
+        return this.getWritableDatabase().query("chapters", new String[]{"_id", "name", "section_id"}, "section_id = ?", new String[]{sectionIndex},
+                null, null, null);
+    }
+
 
     @Override
     public synchronized void close() {
