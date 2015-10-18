@@ -2,6 +2,7 @@ package com.android.tirukkural;
 
 import android.annotation.*;
 import android.app.*;
+import android.content.Intent;
 import android.database.*;
 import android.graphics.*;
 import android.os.*;
@@ -35,12 +36,11 @@ public class MainActivity extends ExpandableListActivity {
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
-//        Cursor kuralCursor = readKural();
-//        mAdapter = new SimpleCursorAdapter(this, R.layout.couplets, kuralCursor, new String[]{"_id", "line1", "line2"},
-//                new int[]{0, R.id.line1, R.id.line2}, 0);
 
         getExpandableListView().setGroupIndicator(null);
         getExpandableListView().setTextFilterEnabled(true);
+        getExpandableListView().setOnChildClickListener(this);
+
         SectionChapterAdapter adapter = new SectionChapterAdapter(mDbHelper.readSections(), this, mDbHelper);
 
         adapter.setViewBinder(new SimpleCursorTreeAdapter.ViewBinder() {
@@ -50,12 +50,12 @@ public class MainActivity extends ExpandableListActivity {
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 TextView textView = (TextView) view;
                 textView.setTypeface(tamilFont);
+                textView.setTypeface(tamilFont);
                 return false;
             }
         });
 
         setListAdapter(adapter);
-//
     }
 
 
@@ -72,5 +72,14 @@ public class MainActivity extends ExpandableListActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
+                                int childPosition, long id) {
+        Intent i = new Intent(this,CoupletActivity.class);
+        i.putExtra("chapter", id);
+        startActivity(i);
+        return  true;
     }
 }

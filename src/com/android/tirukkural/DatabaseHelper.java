@@ -123,8 +123,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public Cursor readKural() {
-        return this.getWritableDatabase().query("couplets", new String[]{"_id", "line1", "line2"}, null, new String[]{},
+    public Cursor readCouplets(String chapterIndex) {
+        return this.getWritableDatabase().query("couplets", new String[]{"_id", "line1", "line2","en_meaning", "ta_meaning"}, "chapter_id = ?", new String[]{chapterIndex},
                 null, null, null);
     }
 
