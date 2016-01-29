@@ -17,7 +17,6 @@ import java.sql.SQLException;
 public class MainActivity extends ExpandableListActivity {
 
     DatabaseHelper mDbHelper;
-    ExpandableListAdapter expandableListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +67,7 @@ public class MainActivity extends ExpandableListActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     @Override
