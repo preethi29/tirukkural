@@ -10,7 +10,8 @@ public class SectionChapterAdapter extends SimpleCursorTreeAdapter {
     private DatabaseHelper databaseHelper;
 
     public SectionChapterAdapter(Cursor cursor, Context context, DatabaseHelper databaseHelper) {
-        super(context, cursor, R.layout.sections, new String[]{"name"}, new int[]{R.id.section_name}, R.layout.chapters, new String[]{"name"}, new int[]{R.id.chapter_name});
+        super(context, cursor, R.layout.sections, new String[]{"name"},
+                new int[]{R.id.section_name}, R.layout.chapters, new String[]{"name"}, new int[]{R.id.chapter_name});
         this.databaseHelper = databaseHelper;
     }
 
