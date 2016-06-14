@@ -37,5 +37,9 @@ public class CoupletActivity extends ListActivity {
         setListAdapter(simpleCursorAdapter);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("destroying");
+    }
 }

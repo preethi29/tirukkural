@@ -15,3 +15,13 @@ bin/
 gen/
 .idea/
 *.iml
+
+# Non-project-specific build files:
+build.xml
+local.properties
+/gradlew
+/gradlew.bat
+/gradle
+# Gradle builds
+/build
+.gradle/

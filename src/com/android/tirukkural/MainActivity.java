@@ -36,7 +36,7 @@ public class MainActivity extends ExpandableListActivity {
             sqle.printStackTrace();
         }
 
-        getExpandableListView().setGroupIndicator(null);
+//        getExpandableListView().setGroupIndicator(null);
         getExpandableListView().setTextFilterEnabled(true);
         getExpandableListView().setOnChildClickListener(this);
 
