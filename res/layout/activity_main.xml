@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="பால்/Section/Paal"
-        android:id="@+id/section"
+        android:id="@+id/section_title"
         android:layout_centerHorizontal="true" />
 
     <ExpandableListView android:id="@android:id/list"
-                         android:layout_below="@+id/section"
+                         android:layout_below="@+id/section_title"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         />
