@@ -28,16 +28,27 @@ public class CoupletActivity extends ListActivity {
                 0);
 
         simpleCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-            Typeface tamilFont = Typeface.createFromAsset(getAssets(), "fonts/tamil3.ttf");
+            Typeface boldFont = Typeface.createFromAsset(getAssets(), "fonts/TAC-Kambar-B.ttf");
+            Typeface normalFont = Typeface.createFromAsset(getAssets(), "fonts/TAC-Kambar.ttf");
 
             @Override
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 TextView textView = (TextView) view;
-                textView.setTypeface(tamilFont);
+                switch(textView.getId()){
+                    case R.id.line1:
+                    case R.id.line2:
+                        textView.setTypeface(boldFont);
+                        break;
+                    case R.id.ta_meaning:
+                    case R.id.en_meaning:
+                        textView.setTypeface(normalFont);
+                        break;
+                    default:
+                        textView.setTypeface(normalFont);
+                }
                 return false;
             }
         });
-
         setListAdapter(simpleCursorAdapter);
     }
 

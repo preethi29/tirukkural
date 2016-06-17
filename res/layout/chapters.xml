@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
         android:layout_marginLeft="20sp"
+        android:paddingTop="12.5sp"
+        android:paddingBottom="12.5sp"
         android:textSize="18sp"/>
 
 </LinearLayout>
